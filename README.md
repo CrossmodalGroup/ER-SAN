@@ -2,7 +2,7 @@
 
 ## Introduction
 
-ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning —— IJCAI22
+ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning — IJCAI22
 
 In this paper, we propose to enhance the correlations between objects from a comprehensive view that jointly considers explicit semantic and geometric relations, generating plausible captions with accurate relationship predictions
 
@@ -80,7 +80,7 @@ geometry-iou0.2-dist0.5-undirected  # geometry graph data
 ### Cross entropy Training
 Run the script train_triplet.sh or use the following code to train the model: 
 ```bash
-CUDA_VISIBLE_DEVICES=7 python train.py --id transformer_triplet --caption_model transformer_triplet --checkpoint_path log_transformer_triplet --label_smoothing 0.0 --batch_size 10 --learning_rate 3e-4 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 3 --learning_rate_decay_rate 0.5 --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --max_epochs 18 --noamopt_warmup 33000 --use_box 1 --loader_num_workers 4 --sg_label_embed_size 512 --seq_per_img 5 --use_warmup
+CUDA_VISIBLE_DEVICES=0 python train.py --id transformer_triplet --caption_model transformer_triplet --checkpoint_path log_transformer_triplet --label_smoothing 0.0 --batch_size 10 --learning_rate 3e-4 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 3 --learning_rate_decay_rate 0.5 --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --max_epochs 18 --noamopt_warmup 33000 --use_box 1 --loader_num_workers 4 --sg_label_embed_size 512 --seq_per_img 5 --use_warmup
 ```
 The train script will dump checkpoints into the folder specified by `--checkpoint_path`. We only save the best-performing checkpoint on validation and the latest checkpoint to save disk space.
 
@@ -92,7 +92,7 @@ For more options, see `opts.py`.
 
 You can run test_triplet.sh or following code for evaluation:
 ```bash
-CUDA_VISIBLE_DEVICES=7 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet/model-best.pth --infos_path log_transformer_triplet/infos_transformer_triplet-best.pkl --input_json data/cocotalk_final.json --language_eval 1 --beam_size 1 --sg_label_embed_size 512
+CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet/model-best.pth --infos_path log_transformer_triplet/infos_transformer_triplet-best.pkl --input_json data/cocotalk_final.json --language_eval 1 --beam_size 1 --sg_label_embed_size 512
 ```
 
 ### Self-critical RL training
@@ -104,19 +104,19 @@ $ bash scripts/copy_model.sh transformer_triplet transformer_triplet_rl
 Then run train_triplet_rl.sh or following code:
 
 ```bash
-CUDA_VISIBLE_DEVICES=7 python train.py --id transformer_triplet_rl --caption_model transformer_triplet --checkpoint_path log_transformer_triplet_rl --label_smoothing 0.0 --batch_size 10 --learning_rate 4e-5 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 17  --learning_rate_decay_rate 0.8  --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --self_critical_after 17 --max_epochs 58 --loader_num_workers 4 --start_from log_transformer_triplet_rl  --sg_label_embed_size 512 --seq_per_img 5 --use_box 1
+CUDA_VISIBLE_DEVICES=0 python train.py --id transformer_triplet_rl --caption_model transformer_triplet --checkpoint_path log_transformer_triplet_rl --label_smoothing 0.0 --batch_size 10 --learning_rate 4e-5 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 17  --learning_rate_decay_rate 0.8  --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --self_critical_after 17 --max_epochs 58 --loader_num_workers 4 --start_from log_transformer_triplet_rl  --sg_label_embed_size 512 --seq_per_img 5 --use_box 1
 ```
 For evaluation:
 
 ```bash
-CUDA_VISIBLE_DEVICES=7 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet_rl/model-best.pth --infos_path log_transformer_triplet_rl/infos_transformer_triplet_rl-best.pkl --language_eval 1 --beam_size 1
+CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet_rl/model-best.pth --infos_path log_transformer_triplet_rl/infos_transformer_triplet_rl-best.pkl --language_eval 1 --beam_size 1
 ```
 
 ### Ensemble model testing
 Our code allows different models trained from different random seeds to be combined to form an ensemble model.
 The eval_ensemble.py assumes the model saving under log_transformer_triplet_$seed. Run following code in test_triplet_ensemble.sh:
 ```bash
-CUDA_VISIBLE_DEVICES=7 python eval_ensemble.py --dump_images 0 --num_images 5000 --input_json data/cocotalk_final.json --language_eval 1 --beam_size 1 --sg_label_embed_size 512 --ids transformer_triplet_2022 transformer_triplet_42 transformer_triplet_5201314 transformer_triplet_901 --id ensemble_model --verbose_loss 1
+CUDA_VISIBLE_DEVICES=0 python eval_ensemble.py --dump_images 0 --num_images 5000 --input_json data/cocotalk_final.json --language_eval 1 --beam_size 1 --sg_label_embed_size 512 --ids transformer_triplet_2022 transformer_triplet_42 transformer_triplet_5201314 transformer_triplet_901 --id ensemble_model --verbose_loss 1
 ```
 ## Acknowledgement
 Our code is mainly modified from [yahoo/object_relation_transformer](https://github.com/yahoo/object_relation_transformer). We use the visual features provided by Bottom-Up [peteanderson80/bottom-up-attention](https://github.com/peteanderson80/bottom-up-attention), and the semantic graph data provided by [WeakVRD-Captioning](https://github.com/Gitsamshi/WeakVRD-Captioning), the geometry graph data provided by [VSUA-Captioning](https://github.com/ltguo19/VSUA-Captioning). If you think this code is helpful, please consider to cite the corresponding papers and our IJCAI paper.
