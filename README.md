@@ -6,7 +6,7 @@ ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning â
 
 In this paper, we propose to enhance the correlations between objects from a comprehensive view that jointly considers explicit semantic and geometric relations, generating plausible captions with accurate relationship predictions
 
-![TripletTransformer](media\TripletTransformer.png)
+![TripletTransformer](media/TripletTransformer.png)
 
 ## Requirements
 * Cuda-enabled GPU
