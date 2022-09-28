@@ -1,0 +1,7 @@
+CUDA_VISIBLE_DEVICES=7 python eval_ensemble.py --dump_images 0 --num_images 5000 --input_json data/cocotalk_final.json --language_eval 1 --beam_size 1 --sg_label_embed_size 512 --ids transformer_triplet_2022 transformer_triplet_42 transformer_triplet_5201314 transformer_triplet_901 --id ensemble_model --verbose_loss 1
+
+CUDA_VISIBLE_DEVICES=7 python eval_ensemble.py --dump_images 0 --num_images 5000 --input_json data/cocotalk_final.json --language_eval 1 --beam_size 2 --sg_label_embed_size 512 --ids transformer_triplet_2022 transformer_triplet_42 transformer_triplet_5201314 transformer_triplet_901 --id ensemble_model --verbose_loss 1
+
+CUDA_VISIBLE_DEVICES=7 python eval_ensemble.py --dump_images 0 --num_images 5000 --input_json data/cocotalk_final.json --language_eval 1 --beam_size 3 --sg_label_embed_size 512 --ids transformer_triplet_2022 transformer_triplet_42 transformer_triplet_5201314 transformer_triplet_901 --id ensemble_model --verbose_loss 1
+
+CUDA_VISIBLE_DEVICES=7 python eval_ensemble.py --dump_images 0 --num_images 5000 --input_json data/cocotalk_final.json --language_eval 1 --beam_size 5 --sg_label_embed_size 512 --ids transformer_triplet_2022 transformer_triplet_42 transformer_triplet_5201314 transformer_triplet_901 --id ensemble_model --verbose_loss 1

@@ -1,0 +1,2 @@
+#/bin/bash
+CUDA_VISIBLE_DEVICES=7 python train.py --id transformer_triplet --caption_model transformer_triplet --checkpoint_path log_transformer_triplet --label_smoothing 0.0 --batch_size 10 --learning_rate 3e-4 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 3 --learning_rate_decay_rate 0.5 --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --max_epochs 18 --noamopt_warmup 33000 --use_box 1 --loader_num_workers 4 --sg_label_embed_size 512 --seq_per_img 5 --use_warmup
