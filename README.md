@@ -1,81 +1,63 @@
 # ER-SAN
 
-## Introduction
+## Contents
 
-ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning — IJCAI22
+1. [Introduction](#Introduction)
+2. [Model Evaluation](#Model Evaluation)
+3. [Environment Requirements](#Environment Requirements)
+4. [Prepare Data](#Prepare Data)
+5. [Training](#Training )
+6. [Ensemble Model](#Ensemble Model)
+7. [Acknowledgement](#Acknowledgement)
+
+
+## Introduction
+  
+ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning —— IJCAI22 Oral
 
 In this paper, we propose to enhance the correlations between objects from a comprehensive view that jointly considers explicit semantic and geometric relations, generating plausible captions with accurate relationship predictions
 
-![TripletTransformer](media/TripletTransformer.png)
+![TripletTransformer](media\TripletTransformer.png)
 
-## Requirements
-* Cuda-enabled GPU
-* ...
+## Model Evaluation
+
+> ** Here are pretrained model. You can download these file for evaluation.
+- checkpoint for ER-SAN on image caption using cross-entropy: [log_transformer_triplet](https://drive.google.com/drive/folders/1y9QhVB10LSehCjPnEmD-fFKTatZFIQKI?usp=share_link).
+- checkpoint for ER-SAN on image caption using CIDEr optimization: [log_transformer_triplet_rl](https://drive.google.com/drive/folders/1y9QhVB10LSehCjPnEmD-fFKTatZFIQKI?usp=share_link). 
+
+For evaluation:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet_rl/model-best.pth --infos_path log_transformer_triplet_rl/infos_transformer_triplet_rl-best.pkl --language_eval 1 --beam_size 1
+```
+You can get similar results on the MSCOCO Karpathy split.
+```
+   Model         |      Cross Entropy             |        RL 
+                 | B@1  B@4  M    R    C     S    | B@1   B@4   M   R    C     S
+Transformer(Base)| 75.8 34.2 27.7 56.1 113.4 20.8 | 80.6 38.4 28.6 58.4 128.6 22.6
+ER-SAN[Ours]     | 78.2 38.8 29.2 58.5 122.9 22.2 | 82.1 41.7 30.1 60.3 135.3 23.8
+```
+
+
+## Environment Requirements
+
+* First, clone the repository locally:
+```shell
+git clone https://github.com/CrossmodalGroup/ER-SAN.git
+cd ER-SAN
+```
+* Then, create an environment and install PyTorch and torchvision:
+```shell
+conda create -n ER-SAN python=3.6
+conda activate ER-SAN
+pip install -r requirements.txt
+# ^ if the CUDA version is not compatible with your system; visit pytorch.org for compatible matches.
+```
 
 
 ## Prepare Data
-You can see [ruotianluo/self-critical.pytorch](https://github.com/ruotianluo/self-critical.pytorch/blob/master/data/README.md) for more details
+Check [DATASET.md](DATASET.md) for instructions of data downloading.
 
-### 1. Download and preprocess the COCO captions
-
-Download the preprocessed COCO captions from this [link](http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip) of Karpathy's homepage. Extract `dataset_coco.json` from the zip file and copy it into `data/`. This file provides preprocessed captions and also standard train-val-test splits.
-
-Then run:
-
-```
-$ python scripts/prepro_labels.py --input_json data/dataset_coco.json --output_json data/cocotalk.json --output_h5 data/cocotalk
-```
-`prepro_labels.py` will map all words that occur <= 5 times to a special `UNK` token, and create a vocabulary for all the remaining words. The image information and vocabulary are dumped into `data/cocotalk.json` and discretized caption data are dumped into `data/cocotalk_label.h5`.
-
-Next run:
-```
-$ python scripts/prepro_ngrams.py --input_json data/dataset_coco.json --dict_json data/cocotalk.json --output_pkl data/coco-train --split train
-```
-
-This will preprocess the dataset and get the cache for calculating cider score.
-
-### 2. Download Bottom-Up features
-The pre-extracted [bottom-up](https://github.com/peteanderson80/bottom-up-attention) image features are used. Download pre-extracted feature from this [link](https://github.com/peteanderson80/bottom-up-attention#pretrained-features) (our paper uses the adaptive features).
-Then:
-
-```bash
-mkdir data/bu_data; cd data/bu_data
-wget https://storage.googleapis.com/bottom-up-attention/trainval.zip
-unzip trainval.zip
-```
-```bash
-python script/make_bu_data.py --output_dir data/cocobu
-```
-This will create `data/cocobu_fc`, `data/cocobu_att` and `data/cocobu_box`.
-
-### 3. Download sematic graph data
-The sematic graph data we use is from [WeakVRD-Captioning](https://github.com/Gitsamshi/WeakVRD-Captioning). First download the file `coco_cmb_vrg_final.zip` from this [link](https://drive.google.com/drive/folders/1Xt3ZSajATEkKb2RggkzRcgax_hVgfgZv) and unzip it in folder `data`, the semantic graph data of each image are stored in `coco_cmb_vrg_final`,  including the object label of each detected box and the relationship labels between boxes. Then download `cocotalk_final.json` for an extended vocabulary dictionary. More information can be obtained from [this](https://github.com/Gitsamshi/WeakVRD-Captioning).
-
-### 4. Preprocess geometry graph data 
-You need to generate the relative bounding box coordinates for geometry features, please run the following:
-```
-python scripts/prepro_bbox_relative_coords.py --input_json data/dataset_coco.json --input_box_dir data/cocobu_box --output_dir data/cocobu_box_relative --image_root $IMAGE_ROOT
-```
-One method of pre-obtaining geometric graph data is following [VSUA-Captioning](https://github.com/ltguo19/VSUA-Captioning) after downloading [vsua_box_info.pkl](https://drive.google.com/file/d/1G9_ZdjyIprl2wyWCExslWTWOimJf3x8G/view), run:
-```bash
-python scripts/cal_geometry_feats.py
-python scripts/build_geometry_graph.py
-```
-Generated geometric graph data will be stored in `data/geometry-iou0.2-dist0.5-undirected`.
-
-### 5. Overall 
-All in all, to run this model, you need to prepare following files/folders:
- ```bash
-cocotalk_final.json        # file containing additional info and vocab information
-cocotalk_label.h5          # captions groudtruth
-coco-train-idxs.p          # cached token file for cider
-cocobu_att                 # bottom-up feature
-cocobu_box                 # bottom-up detected boxes information
-coco_cmb_vrg_final         # sematic graph data
-cocobu_adaptive_box_relative  # relative bounding box coordinates
-vsua_box_info.pkl          # boxes and width and height of images
-geometry-iou0.2-dist0.5-undirected  # geometry graph data
- ```
 ## Training and Evaluation
 ### Cross entropy Training
 Run the script train_triplet.sh or use the following code to train the model: 
@@ -106,13 +88,9 @@ Then run train_triplet_rl.sh or following code:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python train.py --id transformer_triplet_rl --caption_model transformer_triplet --checkpoint_path log_transformer_triplet_rl --label_smoothing 0.0 --batch_size 10 --learning_rate 4e-5 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 17  --learning_rate_decay_rate 0.8  --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --self_critical_after 17 --max_epochs 58 --loader_num_workers 4 --start_from log_transformer_triplet_rl  --sg_label_embed_size 512 --seq_per_img 5 --use_box 1
 ```
-For evaluation:
 
-```bash
-CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet_rl/model-best.pth --infos_path log_transformer_triplet_rl/infos_transformer_triplet_rl-best.pkl --language_eval 1 --beam_size 1
-```
 
-### Ensemble model testing
+### Ensemble model
 Our code allows different models trained from different random seeds to be combined to form an ensemble model.
 The eval_ensemble.py assumes the model saving under log_transformer_triplet_$seed. Run following code in test_triplet_ensemble.sh:
 ```bash
@@ -121,3 +99,10 @@ CUDA_VISIBLE_DEVICES=0 python eval_ensemble.py --dump_images 0 --num_images 5000
 ## Acknowledgement
 Our code is mainly modified from [yahoo/object_relation_transformer](https://github.com/yahoo/object_relation_transformer). We use the visual features provided by Bottom-Up [peteanderson80/bottom-up-attention](https://github.com/peteanderson80/bottom-up-attention), and the semantic graph data provided by [WeakVRD-Captioning](https://github.com/Gitsamshi/WeakVRD-Captioning), the geometry graph data provided by [VSUA-Captioning](https://github.com/ltguo19/VSUA-Captioning). If you think this code is helpful, please consider to cite the corresponding papers and our IJCAI paper.
 
+`@inproceedings{citation-0,
+  title={ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning},
+  author={Li, Jingyu and Mao, Zhendong and Fang, Shancheng and Li, Hao},
+  booktitle={the 31th International Joint Conference on Artificial Intelligence},
+  pages={1056--1062},
+  year={2022}
+}`
