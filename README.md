@@ -99,20 +99,19 @@ CUDA_VISIBLE_DEVICES=0 python eval_ensemble.py --dump_images 0 --num_images 5000
 Our code is mainly modified from [yahoo/object_relation_transformer](https://github.com/yahoo/object_relation_transformer). We use the visual features provided by Bottom-Up [peteanderson80/bottom-up-attention](https://github.com/peteanderson80/bottom-up-attention), and the semantic graph data provided by [WeakVRD-Captioning](https://github.com/Gitsamshi/WeakVRD-Captioning), the geometry graph data provided by [VSUA-Captioning](https://github.com/ltguo19/VSUA-Captioning). If you think this code is helpful, please consider to cite the corresponding papers and our IJCAI paper.
 
 ```bash
-@inproceedings{ER-SAN,
-  title={ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning},
-  author={Li, Jingyu and Mao, Zhendong and Fang, Shancheng and Li, Hao},
-  booktitle={the 31th International Joint Conference on Artificial Intelligence},
-  pages={1056--1062},
-  year={2022}
+@inproceedings{ijcai2022p151,
+  title     = {ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning},
+  author    = {Li, Jingyu and Mao, Zhendong and Fang, Shancheng and Li, Hao},
+  booktitle = {Proceedings of the Thirty-First International Joint Conference on
+               Artificial Intelligence, {IJCAI-22}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Lud De Raedt},
+  pages     = {1081--1087},
+  year      = {2022},
+  month     = {7},
+  note      = {Main Track},
+  doi       = {10.24963/ijcai.2022/151},
+  url       = {https://doi.org/10.24963/ijcai.2022/151},
 }
 ```
 
-
-[https://github.com/ruotianluo/self-critical.pytorch]: https://github.com/ruotianluo/self-critical.pytorch
-
-[https://drive.google.com/drive/folders/1y9QhVB10LSehCjPnEmD-fFKTatZFIQKI?usp=share_link]: https://drive.google.com/drive/folders/1y9QhVB10LSehCjPnEmD-fFKTatZFIQKI?usp=share_link
-
-[https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link]: https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link
-
-[https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link]: https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link
