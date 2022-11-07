@@ -51,7 +51,7 @@ pip install -r requirements.txt
 # ^ if the CUDA version is not compatible with your system; visit pytorch.org for compatible matches.
 ```
 * For cider and coco-caption evaluation for python3, download [cider](https://drive.google.com/drive/folders/1jY3NcPrDRoJcv1glI5mferDKPXpfZAkJ?usp=share_link) and [coco-caption](https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link)
-or refer to [ruotian][https://github.com/ruotianluo/self-critical.pytorch]
+or refer to [ruotian](https://github.com/ruotianluo/self-critical.pytorch])
 
 
 ## Prepare Data
