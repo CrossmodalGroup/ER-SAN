@@ -1,7 +1,4 @@
-# ER-SAN
-
 ## Contents
-
 1. [Introduction](#Introduction)
 2. [Model Evaluation](#Model-Evaluation)
 3. [Environment Requirements](#Environment-Requirements)
@@ -17,7 +14,7 @@ ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning â
 
 In this paper, we propose to enhance the correlations between objects from a comprehensive view that jointly considers explicit semantic and geometric relations, generating plausible captions with accurate relationship predictions
 
-![TripletTransformer](media\TripletTransformer.png)
+![TripletTransformer](media/TripletTransformer.png)
 
 ## Model Evaluation
 
@@ -56,7 +53,7 @@ pip install -r requirements.txt
 
 
 ## Prepare Data
-Check [DATASET.md](jetbrains://pycharm/navigate/reference?project=ER-SAN&path=data/DATASET.md)  for instructions of data downloading.
+Check [DATASET.md](data/DATASET.md)  for instructions of data downloading.
 
 ## Training
 ### Cross Entropy Training
