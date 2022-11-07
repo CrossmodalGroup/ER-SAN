@@ -3,11 +3,11 @@
 ## Contents
 
 1. [Introduction](#Introduction)
-2. [Model Evaluation](#Model Evaluation)
-3. [Environment Requirements](#Environment Requirements)
-4. [Prepare Data](#Prepare Data)
+2. [Model Evaluation](#Model-Evaluation)
+3. [Environment Requirements](#Environment-Requirements)
+4. [Prepare Data](#Prepare-Data)
 5. [Training](#Training )
-6. [Ensemble Model](#Ensemble Model)
+6. [Ensemble Model](#Ensemble-Model)
 7. [Acknowledgement](#Acknowledgement)
 
 
@@ -56,10 +56,10 @@ pip install -r requirements.txt
 
 
 ## Prepare Data
-Check [DATASET.md](DATASET.md) for instructions of data downloading.
+Check [DATASET.md](jetbrains://pycharm/navigate/reference?project=ER-SAN&path=data/DATASET.md)  for instructions of data downloading.
 
-## Training and Evaluation
-### Cross entropy Training
+## Training
+### Cross Entropy Training
 Run the script train_triplet.sh or use the following code to train the model: 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python train.py --id transformer_triplet --caption_model transformer_triplet --checkpoint_path log_transformer_triplet --label_smoothing 0.0 --batch_size 10 --learning_rate 3e-4 --num_layers 4 --input_encoding_size 512 --rnn_size 2048 --learning_rate_decay_start 3 --learning_rate_decay_rate 0.5 --scheduled_sampling_start 0 --save_checkpoint_every 3000 --language_eval 1 --val_images_use 5000 --max_epochs 18 --noamopt_warmup 33000 --use_box 1 --loader_num_workers 4 --sg_label_embed_size 512 --seq_per_img 5 --use_warmup
@@ -99,10 +99,12 @@ CUDA_VISIBLE_DEVICES=0 python eval_ensemble.py --dump_images 0 --num_images 5000
 ## Acknowledgement
 Our code is mainly modified from [yahoo/object_relation_transformer](https://github.com/yahoo/object_relation_transformer). We use the visual features provided by Bottom-Up [peteanderson80/bottom-up-attention](https://github.com/peteanderson80/bottom-up-attention), and the semantic graph data provided by [WeakVRD-Captioning](https://github.com/Gitsamshi/WeakVRD-Captioning), the geometry graph data provided by [VSUA-Captioning](https://github.com/ltguo19/VSUA-Captioning). If you think this code is helpful, please consider to cite the corresponding papers and our IJCAI paper.
 
-`@inproceedings{citation-0,
+```bash
+@inproceedings{citation-0,
   title={ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning},
   author={Li, Jingyu and Mao, Zhendong and Fang, Shancheng and Li, Hao},
   booktitle={the 31th International Joint Conference on Artificial Intelligence},
   pages={1056--1062},
   year={2022}
-}`
+}
+```
