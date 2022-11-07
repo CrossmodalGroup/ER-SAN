@@ -10,9 +10,9 @@
 
 ## Introduction
   
-ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning —— IJCAI22 Oral
+ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning —— IJCAI22 **Oral**
 
-In this paper, we propose to enhance the correlations between objects from a comprehensive view that jointly considers explicit semantic and geometric relations, generating plausible captions with accurate relationship predictions
+In this paper, we propose to enhance the correlations between objects from a comprehensive view that jointly considers explicit semantic and geometric relations, generating plausible captions with accurate relationship predictions.
 
 ![TripletTransformer](media/TripletTransformer.png)
 
@@ -50,6 +50,8 @@ conda activate ER-SAN
 pip install -r requirements.txt
 # ^ if the CUDA version is not compatible with your system; visit pytorch.org for compatible matches.
 ```
+* For cider and coco-caption evaluation for python3, download [cider](https://drive.google.com/drive/folders/1jY3NcPrDRoJcv1glI5mferDKPXpfZAkJ?usp=share_link) and [coco-caption](https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link)
+or refer to [ruotian][https://github.com/ruotianluo/self-critical.pytorch]
 
 
 ## Prepare Data
@@ -97,7 +99,7 @@ CUDA_VISIBLE_DEVICES=0 python eval_ensemble.py --dump_images 0 --num_images 5000
 Our code is mainly modified from [yahoo/object_relation_transformer](https://github.com/yahoo/object_relation_transformer). We use the visual features provided by Bottom-Up [peteanderson80/bottom-up-attention](https://github.com/peteanderson80/bottom-up-attention), and the semantic graph data provided by [WeakVRD-Captioning](https://github.com/Gitsamshi/WeakVRD-Captioning), the geometry graph data provided by [VSUA-Captioning](https://github.com/ltguo19/VSUA-Captioning). If you think this code is helpful, please consider to cite the corresponding papers and our IJCAI paper.
 
 ```bash
-@inproceedings{citation-0,
+@inproceedings{ER-SAN,
   title={ER-SAN: Enhanced-Adaptive Relation Self-Attention Network for Image Captioning},
   author={Li, Jingyu and Mao, Zhendong and Fang, Shancheng and Li, Hao},
   booktitle={the 31th International Joint Conference on Artificial Intelligence},
@@ -105,3 +107,12 @@ Our code is mainly modified from [yahoo/object_relation_transformer](https://git
   year={2022}
 }
 ```
+
+
+[https://github.com/ruotianluo/self-critical.pytorch]: https://github.com/ruotianluo/self-critical.pytorch
+
+[https://drive.google.com/drive/folders/1y9QhVB10LSehCjPnEmD-fFKTatZFIQKI?usp=share_link]: https://drive.google.com/drive/folders/1y9QhVB10LSehCjPnEmD-fFKTatZFIQKI?usp=share_link
+
+[https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link]: https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link
+
+[https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link]: https://drive.google.com/drive/folders/1xgDFT3_uqTMmTjtSUb5ZUOT6TXSQ6AU5?usp=share_link
