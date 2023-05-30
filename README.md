@@ -1,4 +1,4 @@
-We have realeased our main code of recent work [ESR-SAN](https://github.com/CrossmodalGroup/ER-SAN/tree/main/VG-cap). Compared with ER-SAN https://web.archive.org/web/20220717185244id_/https://www.ijcai.org/proceedings/2022/0148.pdf , we propose a new image relation features representation and language prediction method with significant modifications, Specifically
+We have realeased our main code of recent work [ESR-SAN](https://github.com/CrossmodalGroup/ER-SAN/tree/main/VG-cap). Compared with  [ER-SAN](https://web.archive.org/web/20220717185244id_/https://www.ijcai.org/proceedings/2022/0148.pdf), we propose a new image relation features representation and language prediction method with significant modifications, Specifically
 
 - We exploit the novel visual graph topology to calculate the shortest path distance between two objects as the inductive structure-aware relation bias, which explicitly improves the structural relations between object regions.
 - We propose a novel semantic fusion prediction module that selectively focuses on contextual visual and semantic relation features to generate accurate semantic words.
