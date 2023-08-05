@@ -30,7 +30,7 @@ In this paper, we propose to enhance the correlations between objects from a com
 For evaluation:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet_rl/model-best.pth --infos_path log_transformer_triplet_rl/infos_transformer_triplet_rl-best.pkl --language_eval 1 --beam_size 1
+CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet_rl/model-best.pth --infos_path log_transformer_triplet_rl/infos_transformer_triplet_rl-best.pkl --language_eval 1 --beam_size 2
 ```
 You can get similar results on the MSCOCO Karpathy split.
 ```
@@ -78,7 +78,7 @@ For more options, see `opts.py`.
 
 You can run test_triplet.sh or following code for evaluation:
 ```bash
-CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet/model-best.pth --infos_path log_transformer_triplet/infos_transformer_triplet-best.pkl --input_json data/cocotalk_final.json --language_eval 1 --beam_size 1 --sg_label_embed_size 512
+CUDA_VISIBLE_DEVICES=0 python eval.py --dump_images 0 --num_images 5000 --model log_transformer_triplet/model-best.pth --infos_path log_transformer_triplet/infos_transformer_triplet-best.pkl --input_json data/cocotalk_final.json --language_eval 1 --beam_size 2 --sg_label_embed_size 512
 ```
 
 ### Self-critical RL training
